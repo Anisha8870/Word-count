@@ -1,52 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 3 Most Repeated Words</title>
 </head>
 <body>
-    <script>
-
-        function findRepeatedWords(text) {
-            // Convert the text to lowercase and split it into words
-            const words = text.toLowerCase().match(/\b\w+\b/g);
-        
-            // Create an object to keep track of word frequencies
-            const wordCount = {};
-        
-            // Iterate over each word and update the count in the wordCount object
-            words.forEach(word => {
-                if (wordCount[word])
-                 {
-                    wordCount[word]++;
-                } 
-                else
-                 {
-                    wordCount[word] = 1;
-                }
-            });
-        
-            // Find and return words that are repeated
-            const repeatedWords = {};
-            for (const [word, count] of Object.entries(wordCount)) {
-                if (count > 1) {
-                    repeatedWords[word] = count;
-                }
-            }
-        
-            return repeatedWords;
+    <style>
+        table {
+        width: 50%;
+        border-collapse: collapse;
+        margin: 20px auto;
         }
-        
-        // Example usage
-        const text = "This is a test. This test is only a test." ;
-        const result = findRepeatedWords(text);
-        console.log(result); // Output: { this: 2, test: 3, is: 2, a: 2 }
-        
-
-
-
-
-    </script>
+        th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        }
+        th {
+        background-color: #f2f2f2;
+        }
+        </style>
+<script>
+let content = "JavaScript is a scripting language used to develop web pages. Developed in Netscape, JS allows developers to create a dynamic and interactive web page to interact with visitors and execute complex actions. It also enables users to load content into a document without reloading the entire page.";
+let rcontent = content.toLowerCase().replace(/[.!,""]/g,"");
+console.log(rcontent);
+const wordsArray = rcontent.split(" ");
+console.log(wordsArray);
+let wordCount = {};
+for (let word of wordsArray) {
+if (word) {
+wordCount[word] = (wordCount[word] || 0) + 1;
+}
+}
+console.log(wordCount);
+let sortedWords = Object.entries(wordCount)
+.sort((a, b) => b[1] - a[1])
+.slice(0, 3);
+console.log(sortedWords);
+let tableHTML = "<table><thead><tr><th>Word</th><th>Count</th></tr></thead><tbody>";
+for (let [word, count] of sortedWords) {
+tableHTML += `<tr><td>${word}</td><td>${count}</td></tr>`;
+}
+tableHTML += "</tbody></table>";
+document.body.innerHTML += tableHTML;
+</script>
 </body>
 </html>
